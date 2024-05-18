@@ -3,12 +3,26 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "execute:script":"cucumber-js test",
+    "execute:script:failed":"cucumber-js -p rerun @rerun.txt",
+    "clean:report": "rimraf test-result && mkdirp test-result",
+    "generate:report": "npx ts-node ./src/helper/reportGenerate.ts",
+    "pretest": "npm run clean:report",
+    "posttest": "npm run generate:report",
+    "test": "npm run execute:script || npm run posttest",
+    "test:failed": "npm run execute:script:failed || npm run posttest"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@cucumber/cucumber": "^10.7.0",
     "@playwright/test": "^1.44.0",
-    "@types/node": "^20.12.11"
+    "@types/node": "^20.12.11",
+    "mkdirp": "^3.0.1",
+    "multiple-cucumber-html-reporter": "^3.6.2",
+    "rimraf": "^5.0.7",
+    "ts-node": "^10.9.2"
   }
 }
